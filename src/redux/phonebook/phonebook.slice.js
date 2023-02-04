@@ -1,26 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { phonebookInitState } from './phonebook.init-state';
-
-import { nanoid } from 'nanoid';
 
 const phonebookSlice = createSlice({
     name: 'phonebook',
-    initialState: phonebookInitState,
+    initialState: {
+        contacts: [],
+        filter: "",
+    },
     reducers: {
-        addContactAction: {
-            reducer(state, { payload }) {
-                state.contacts.push(payload);
-            },
-            prepare(newContact) {
-                return {
-                    payload: {
-                        id: nanoid(),
-                        ...newContact,
-                    },
-                };
-            },
+        addContactAction(state, { payload }) {
+            state.contacts.push(payload);
         },
         deleteContactAction(state, { payload }) {
             state.contacts = state.contacts.filter(({ id }) => id !== payload);

@@ -8,7 +8,7 @@ import {
     PURGE,
     REGISTER,
 } from 'redux-persist'
-import { phonebookReducer } from "./phonebook.slice";
+import { phonebookReducer } from "./phonebook/phonebook.slice";
 
 
 export const store = configureStore({
