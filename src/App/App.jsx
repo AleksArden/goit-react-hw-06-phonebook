@@ -1,34 +1,31 @@
-import { useState, useEffect, useMemo } from 'react';
-import { nanoid } from 'nanoid';
+import { useMemo } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { ContactForm } from 'components/ContactForm/ContactForm';
 import { Filter } from 'components/Filter/Filter';
 import { ContactList } from 'components/ContactList/ContactList';
-
+import { addContactAction, deleteContactAction } from 'redux/contacts.slice';
+import { filterAction } from 'redux/filter.slice';
+import { getContacts, getFilters } from 'redux/selectors';
 import css from './App.module.css';
 
 export const App = () => {
-  const [contacts, setContacts] = useState(
-    () => JSON.parse(window.localStorage.getItem('contacts')) ?? []
-  );
+  const contacts = useSelector(getContacts);
+  const filter = useSelector(getFilters);
+  console.log(contacts);
+
+  const dispatch = useDispatch();
+
   const addContact = data => {
-    const newContact = {
-      id: nanoid(),
-      ...data,
-    };
-    setContacts([...contacts, newContact]);
+    dispatch(addContactAction(data));
   };
 
-  useEffect(() => {
-    window.localStorage.setItem('contacts', JSON.stringify(contacts));
-  }, [contacts]);
-
-  const [filter, setFilter] = useState('');
   const handleSearch = ({ target: { value } }) => {
-    setFilter(value);
+    dispatch(filterAction(value));
   };
+
   const handleDelete = id => {
-    setContacts(contacts.filter(contact => contact.id !== id));
+    dispatch(deleteContactAction(id));
   };
 
   const normalizedFilter = filter.toLowerCase();
