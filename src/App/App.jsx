@@ -4,15 +4,19 @@ import { useSelector, useDispatch } from 'react-redux';
 import { ContactForm } from 'components/ContactForm/ContactForm';
 import { Filter } from 'components/Filter/Filter';
 import { ContactList } from 'components/ContactList/ContactList';
-import { addContactAction, deleteContactAction } from 'redux/contacts.slice';
-import { filterAction } from 'redux/filter.slice';
-import { getContacts, getFilters } from 'redux/selectors';
+import {
+  addContactAction,
+  deleteContactAction,
+  filterAction,
+} from 'redux/phonebook.slice';
+import { getContacts, getFilters } from 'redux/phonebook.selectors';
 import css from './App.module.css';
 
 export const App = () => {
   const contacts = useSelector(getContacts);
   const filter = useSelector(getFilters);
   console.log(contacts);
+  console.log(filter);
 
   const dispatch = useDispatch();
 
